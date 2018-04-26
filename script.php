@@ -26,13 +26,17 @@ function getBrowserInfo(){
     return $browserData;
 }
 
-function getPostInfo(){
+function getPostInfo()
+{
     $postInfo = array();
-    foreach($_POST as $key => $value) {
-        if(strlen($value) < 10000) {
-            $postInfo[$key] = $value;
-        }else{
-            $postInfo[$key] = "string too long";
+    $jsonBlob = json_decode(trim(file_get_contents("php://input")), true);
+    if ($jsonBlob != null) {
+        foreach ($jsonBlob as $key => $value) {
+            if (strlen($value) < 10000) {
+                $postInfo[$key] = $value;
+            } else {
+                $postInfo[$key] = "string too long";
+            }
         }
     }
     return $postInfo;
