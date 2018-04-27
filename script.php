@@ -44,11 +44,15 @@ function getPostInfo()
 
 function getGetInfo(){
     $getInfo = array();
-    foreach($_GET as $key => $value) {
-        if(strlen($value) < 10000) {
-            $getInfo[$key] = $value;
-        }else{
-            $getInfo[$key] = "string too long";
+    if(array_key_exists('message', $_GET)) {
+        $getInfo = json_decode($_GET['message']);
+    }else {
+        foreach ($_GET as $key => $value) {
+            if (strlen($value) < 10000) {
+                $getInfo[$key] = $value;
+            } else {
+                $getInfo[$key] = "string too long";
+            }
         }
     }
     return $getInfo;
